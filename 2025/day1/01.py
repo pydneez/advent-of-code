@@ -8,25 +8,40 @@ data = pathlib.Path("2025/day1/01.txt").read_text(encoding="utf-8")
 lines = data.strip().split("\n")
 instruction = [(i[0], int(i[1:])) for i in lines]
 
-current = 50
-count = 0
+current1 = 50
+current2 = 50
+count1 = 0
+count2 = 0
 
 
 for direction, amount in instruction:
+    # part 1
     if direction == "R":
         # to higher num
-        current = (current + amount) % 100
+        current1 = (current1 + amount) % 100
     elif direction == "L":
         # to lower num
-        current %= 100
-        current = (current - amount) % 100
+        current1 %= 100
+        current1 = (current1 - amount) % 100
 
-    # print("The current is " + str(current))
-    if current == 0:
-        count += 1
-        # print("The count is " + str(count))
-    
-# actual password is the number of times 
-# that the dial left pointing at 0
-# after any rotation in the sequence.
-print("The final count is " + str(count))
+    if current1 == 0:
+        count1 += 1
+
+
+    # part 2
+    for i in range(amount):
+        if direction == "R":
+            # to higher num
+            current2 = (current2 + 1) % 100
+        elif direction == "L":
+            # to lower num
+            current2 = (current2 - 1) % 100
+        
+        if current2 == 0:
+            count2 += 1
+
+# Final Password 
+# Part 1 : number of times dial left pointing at 0 after any rotation
+print("The final password is " + str(count1))
+# Part 2 : number of time the dial point at 0 during/after the rotation
+print("The final password is " + str(count2))
